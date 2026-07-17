@@ -738,6 +738,28 @@
       #natalChart .planet-mark:hover { filter:drop-shadow(0 0 8px rgba(255,226,166,.8)); }
       #natalChart .aspect-connection { cursor:help; transition:filter .2s ease, opacity .2s ease; }
       #natalChart .aspect-connection:hover { filter:drop-shadow(0 0 5px currentColor); }
+      #natalChart .chart-star { transform-box:fill-box; transform-origin:center; animation:chart-twinkle var(--star-speed,4s) ease-in-out infinite; }
+      #natalChart .chart-shooting { stroke-dasharray:2 150; stroke-dashoffset:152; animation:chart-shoot 9s linear infinite; }
+      #natalChart .aspect-connection[data-aspect="Sextile"] line,
+      #natalChart .aspect-connection[data-aspect="Trigone"] line { animation:aspect-flow var(--aspect-speed,5s) linear infinite; }
+      #natalChart .aspect-connection[data-aspect="Carré"] line,
+      #natalChart .aspect-connection[data-aspect="Opposition"] line { animation:aspect-tension var(--aspect-speed,3.2s) ease-in-out infinite; }
+      #natalChart .aspect-connection[data-aspect="Conjonction"] line { animation:aspect-union var(--aspect-speed,2.8s) ease-in-out infinite; }
+      #natalChart .live-transit-halo { transform-box:fill-box; transform-origin:center; animation:transit-breathe var(--transit-speed,3.5s) ease-in-out infinite; }
+      #natalChart .live-transit-symbol { animation:transit-light var(--transit-speed,3.5s) ease-in-out infinite; }
+      #natalChart .live-transit[data-phase="exact"] .live-transit-halo { animation-duration:1.35s; }
+      #natalChart .live-transit[data-phase="appliquant"] .live-transit-halo { animation-direction:normal; }
+      #natalChart .live-transit[data-phase="séparant"] .live-transit-halo { animation-direction:reverse; opacity:.58; }
+      @keyframes chart-twinkle { 0%,100%{opacity:.18;scale:.7} 50%{opacity:.95;scale:1.35} }
+      @keyframes chart-shoot { 0%,72%{opacity:0;stroke-dashoffset:152} 74%{opacity:.9} 88%{opacity:0;stroke-dashoffset:0} 100%{opacity:0;stroke-dashoffset:0} }
+      @keyframes aspect-flow { to{stroke-dashoffset:-18} }
+      @keyframes aspect-tension { 0%,100%{stroke-opacity:.2} 50%{stroke-opacity:.72;filter:drop-shadow(0 0 2px currentColor)} }
+      @keyframes aspect-union { 0%,100%{stroke-opacity:.28} 50%{stroke-opacity:.9;stroke-width:1.35} }
+      @keyframes transit-breathe { 0%,100%{scale:.76;opacity:.28} 50%{scale:1.35;opacity:.9} }
+      @keyframes transit-light { 0%,100%{opacity:.72} 50%{opacity:1;filter:drop-shadow(0 0 5px currentColor)} }
+      @media (prefers-reduced-motion:reduce) {
+        #natalChart .chart-star,#natalChart .chart-shooting,#natalChart .aspect-connection line,#natalChart .live-transit-halo,#natalChart .live-transit-symbol { animation:none!important; }
+      }
       #dateChart {display:block;width:min(100%,820px);height:auto;margin:8px auto 28px;background:#07050e;border:1px solid rgba(119,183,213,.35);border-radius:24px;box-shadow:inset 0 0 60px rgba(119,183,213,.07)}
       .aspect-legend {display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:-12px 0 24px}.aspect-legend span{font-size:10px;color:#d6cfda;padding:7px 10px;border:1px solid rgba(255,255,255,.1);border-radius:99px}.aspect-legend i{display:inline-block;width:18px;height:2px;margin-right:6px;vertical-align:middle;background:var(--legend-color)}
       .legend-conjunction{--legend-color:#d6b675}.legend-sextile{--legend-color:#77b7d5}.legend-square{--legend-color:#d37477}.legend-trine{--legend-color:#7bc59c}.legend-opposition{--legend-color:#b084db}
@@ -1433,7 +1455,7 @@
                 role="img"
                 aria-label="Roue du thème astral"
               ></svg>
-              <div class="aspect-legend"><span><i class="legend-conjunction"></i>Conjonction</span><span><i class="legend-sextile"></i>Sextile</span><span><i class="legend-square"></i>Carré</span><span><i class="legend-trine"></i>Trigone</span><span><i class="legend-opposition"></i>Opposition</span></div>
+              <div class="aspect-legend"><span><i class="legend-conjunction"></i>Conjonction</span><span><i class="legend-sextile"></i>Sextile</span><span><i class="legend-square"></i>Carré</span><span><i class="legend-trine"></i>Trigone</span><span><i class="legend-opposition"></i>Opposition</span><span>✦ Étoiles animées</span><span>◎ Symboles intérieurs : transits actuels</span></div>
               <div id="planetList" hidden></div>
               <div id="aspectList" hidden></div>
             </div>
@@ -2457,6 +2479,34 @@ return new kd(this.curr.time,a,b)};$jscomp.global.Object.defineProperties(H.prot
         hits.sort((a,b) => b.score - a.score || a.orb - b.orb);
         return { current, hits, skyAspects };
       }
+      function atLocalHour(date, hour=12) {
+        const d = new Date(date);
+        d.setHours(hour,0,0,0);
+        return d;
+      }
+      function transitKey(hit) {
+        return hit ? `${hit.t.name}-${hit.a}-${hit.n.name}` : "none";
+      }
+      function rankDailyHits(hits, limit=8) {
+        const weight = { Lune:5, Mercure:3.2, Vénus:3, Mars:3, Soleil:2.7, Jupiter:1.15, Saturne:1, Uranus:.85, Neptune:.8, Pluton:.8 };
+        return [...hits]
+          .map((hit)=>({hit,dailyScore:(weight[hit.t.name]||1)*3+(1-hit.orb/hit.limit)*4+(hit.phase==="exact"?2:hit.phase==="appliquant"?.7:0)}))
+          .sort((a,b)=>b.dailyScore-a.dailyScore||a.hit.orb-b.hit.orb)
+          .map((item)=>item.hit)
+          .filter((hit,index,array)=>array.findIndex((other)=>transitKey(other)===transitKey(hit))===index)
+          .slice(0,limit);
+      }
+      function dailyLunarEvent(natal, date) {
+        let best = null;
+        for (let hour=0; hour<24; hour+=3) {
+          const instant=atLocalHour(date,hour), lunarHits=calculateTransitSnapshot(natal,instant).hits.filter((hit)=>hit.t.name==="Lune");
+          for (const hit of lunarHits) {
+            const normalized=hit.orb/hit.limit;
+            if (!best||normalized<best.normalized) best={...hit,eventTime:instant,normalized};
+          }
+        }
+        return best&&best.orb<=2.5?best:null;
+      }
       function localIso(date) {
         return [date.getFullYear(), String(date.getMonth()+1).padStart(2,"0"), String(date.getDate()).padStart(2,"0")].join("-");
       }
@@ -2485,15 +2535,15 @@ return new kd(this.curr.time,a,b)};$jscomp.global.Object.defineProperties(H.prot
         }
         el.querySelectorAll("[data-forecast-date]").forEach((button) => button.addEventListener("click", () => buildDaily(natal, new Date(`${button.dataset.forecastDate}T12:00:00`))));
       }
-      function domainHit(top, config) {
+      function domainHit(top, config, excluded=new Set()) {
         if (!top.length) return null;
-        if (config.name === "Général") return top[0];
+        if (config.name === "Général") return top.find((hit)=>!excluded.has(transitKey(hit)))||top[0];
         return top.map((h) => ({ h, relevance: h.score + (config.planets.includes(h.t.name) ? 2.4 : 0) + (config.planets.includes(h.n.name) ? 2 : 0) + (config.houses.includes(h.t.house) ? 2.2 : 0) }))
-          .filter((x) => config.planets.includes(x.h.t.name) || config.planets.includes(x.h.n.name) || config.houses.includes(x.h.t.house))
+          .filter((x) => !excluded.has(transitKey(x.h))&&(config.planets.includes(x.h.t.name) || config.planets.includes(x.h.n.name) || config.houses.includes(x.h.t.house)))
           .sort((a,b) => b.relevance-a.relevance)[0]?.h || null;
       }
-      function buildDomainForecast(config, top, current) {
-        const h = domainHit(top, config), titleSets = {
+      function buildDomainForecast(config, top, current, excluded=new Set()) {
+        const h = domainHit(top, config, excluded), titleSets = {
           Amour: ["Un lien peut gagner en vérité", "Ne négociez pas votre place dans le lien"],
           Travail: ["Une ouverture professionnelle à structurer", "La pression révèle la bonne priorité"],
           Vitalité: ["Votre énergie retrouve un meilleur courant", "Le corps demande un rythme plus intelligent"],
@@ -2501,16 +2551,16 @@ return new kd(this.curr.time,a,b)};$jscomp.global.Object.defineProperties(H.prot
         };
         if (!h) {
           const preferred = current.find((p) => p.name === (config.planets[0] || "Soleil")) || current[0], house = houseEditorial[preferred.house];
-          return { title: config.neutralTitle, level: `Climat de fond · Maison ${preferred.house || "—"}`, text: `${preferred.name} traverse ${house ? house.focus : "un secteur discret de votre thème"}. Aucun aspect exact ne force le scénario : cette journée vous laisse davantage de liberté pour choisir votre manière d’agir.`, action: house?.action || config.defaultAction, watch: planetEditorial[preferred.name]?.risk || "chercher un signe au lieu de regarder la réalité", question: config.question };
+          return { hit:null, title: config.neutralTitle, level: `Climat de fond · Maison ${preferred.house || "—"}`, evidence:`${preferred.glyph} ${degreeLabel(preferred.lon)} · Maison ${preferred.house||"—"} · aucun aspect personnel à moins de 1°`, text: `${preferred.name} traverse ${house ? house.focus : "un secteur discret de votre thème"}. Aucun aspect exact ne force le scénario : cette journée vous laisse davantage de liberté pour choisir votre manière d’agir.`, action: house?.action || config.defaultAction, watch: planetEditorial[preferred.name]?.risk || "chercher un signe au lieu de regarder la réalité", question: config.question };
         }
         const tone = aspectEditorial[h.a], house = houseEditorial[h.t.house], proximity = hitProximity(h), plain = plainForecast(h),
           level = `${proximity >= 75 ? "Moment décisif" : proximity >= 45 ? "Influence soutenue" : "Tendance active"} · ${h.phase}`,
           text = `${plain.message} ${plain.action}`;
-        return { title: config.name === "Général" ? plain.headline : titleSets[config.name][tone.easy ? 0 : 1], level, text, action: house?.action || config.defaultAction, watch: plain.watch, question: config.question };
+        return { hit:h, title: config.name === "Général" ? plain.headline : titleSets[config.name][tone.easy ? 0 : 1], level, evidence:`${h.t.glyph} ${h.t.name} ${h.a.toLowerCase()} ${h.n.glyph} ${h.n.name} natal · orbe ${h.orb.toFixed(2)}° · ${h.phase}`, text, action: house?.action || config.defaultAction, watch: plain.watch, question: config.question };
       }
       function buildDaily(natal, targetDate) {
-        targetDate = new Date(targetDate);
-        const { current, hits, skyAspects } = calculateTransitSnapshot(natal, targetDate), top = hits.slice(0,8),
+        targetDate = atLocalHour(targetDate,12);
+        const { current, hits, skyAspects } = calculateTransitSnapshot(natal, targetDate), top = rankDailyHits(hits,8),
           el = document.getElementById("transitList"), deep = document.getElementById("deepAnalysis"), fmt = new Intl.DateTimeFormat("fr-FR", { dateStyle:"full" }), dateLabel = new Intl.DateTimeFormat("fr-FR", { day:"numeric", month:"long", year:"numeric" }).format(targetDate);
         drawDateChart(document.getElementById("dateChart"), current, skyAspects, targetDate);
         document.getElementById("dateChartTitle").textContent = `Thème astral du ${dateLabel}`;
@@ -2739,12 +2789,19 @@ return new kd(this.curr.time,a,b)};$jscomp.global.Object.defineProperties(H.prot
           roman = ["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII"],
           houseShort = ["IDENTITÉ","RESSOURCES","ÉCHANGES","RACINES","CRÉATION","QUOTIDIEN","RELATIONS","INTIMITÉ","HORIZONS","VOCATION","PROJETS","INTÉRIEUR"];
         svg.setAttribute("aria-label", `Thème natal précis : Ascendant ${degreeLabel(angles.asc)}, Milieu du Ciel ${degreeLabel(angles.mc)}, ${planets.length} planètes et ${aspects.length} aspects majeurs`);
-        const desc=add("desc",{},`Positions natales : ${planets.map((p)=>`${p.name} ${degreeLabel(p.lon)} maison ${p.house}`).join(", ")}.`),
-          defs=add("defs"), radial=add("radialGradient",{id:"natalField",cx:"50%",cy:"47%",r:"58%"},"",defs);
+        const desc=add("desc",{},`Positions natales : ${planets.map((p)=>`${p.name} ${degreeLabel(p.lon)} maison ${p.house}`).join(", ")}. Le ciel animé montre séparément les transits calculés au moment de la consultation.`),
+          defs=add("defs"), radial=add("radialGradient",{id:"natalField",cx:"50%",cy:"47%",r:"58%"},"",defs), starClip=add("clipPath",{id:"natalStarClip"},"",defs);
+        add("circle",{cx:c,cy:c,r:382},"",starClip);
         add("stop",{offset:"0%","stop-color":"#151022"},"",radial); add("stop",{offset:"58%","stop-color":"#090711"},"",radial); add("stop",{offset:"100%","stop-color":"#05040a"},"",radial);
         const glow=add("filter",{id:"natalGlow",x:"-80%",y:"-80%",width:"260%",height:"260%"},"",defs);
         add("feGaussianBlur",{stdDeviation:"2.2",result:"blur"},"",glow); const merge=add("feMerge",{},"",glow); add("feMergeNode",{in:"blur"},"",merge); add("feMergeNode",{in:"SourceGraphic"},"",merge);
         add("circle", { cx:c, cy:c, r:388, fill:"url(#natalField)", stroke:"#dbc58f", "stroke-width":1.15 });
+        const stars=add("g",{"clip-path":"url(#natalStarClip)","aria-hidden":"true"});
+        for(let i=0;i<92;i++){
+          const angle=(i*137.508+17)%360,radius=72+((i*83)%298),[sx,sy]=point(angle,radius),size=.35+(i%5)*.18;
+          add("circle",{class:"chart-star",cx:sx,cy:sy,r:size,fill:i%9===0?"#f4d99a":i%7===0?"#b9dff3":"#ffffff","fill-opacity":.22+(i%6)*.1,style:`--star-speed:${3.2+(i%8)*.62}s;animation-delay:-${(i%11)*.47}s`},"",stars);
+        }
+        [[118,176,338,270,-1],[505,118,690,210,-5.7],[86,535,298,628,-3.2]].forEach(([x1,y1,x2,y2,delay])=>add("line",{class:"chart-shooting",x1,y1,x2,y2,stroke:"#fff7dc","stroke-width":1.2,"stroke-linecap":"round",style:`animation-delay:${delay}s;filter:drop-shadow(0 0 4px #cab9ff)`},"",stars));
         add("circle", { cx:c, cy:c, r:381, fill:"none", stroke:"#4c4058", "stroke-width":.45 });
         for (let ray=0;ray<360;ray+=15) { const [x1,y1]=point(ray,74),[x2,y2]=point(ray,205); add("line",{x1,y1,x2,y2,stroke:"#756780","stroke-width":.35,"stroke-opacity":.16}); }
         for (let degree=0; degree<360; degree+=5) {
@@ -2779,7 +2836,7 @@ return new kd(this.curr.time,a,b)};$jscomp.global.Object.defineProperties(H.prot
           const [x1,y1]=point(displayAngle(o.p1.lon),198), [x2,y2]=point(displayAngle(o.p2.lon),198);
           const limit=aspectDefs.find((d)=>d[0]===o.a)?.[2]||8, opacity=.2+(1-o.orb/limit)*.38,
             dash=o.a==="Sextile"?"2 3":o.a==="Opposition"?"5 2":"",tone=["Sextile","Trigone"].includes(o.a)?"fluid":"tension",
-            group=add("g",{class:"aspect-connection","data-tone":tone,style:`color:${o.color}`});
+            group=add("g",{class:"aspect-connection","data-tone":tone,"data-aspect":o.a,style:`color:${o.color};--aspect-speed:${Math.max(1.8,5.6-o.orb*.42).toFixed(2)}s`});
           add("title",{},`${o.p1.name} ${o.a.toLowerCase()} ${o.p2.name} · orbe ${o.orb.toFixed(2)}°`,group);
           add("line",{x1,y1,x2,y2,stroke:o.color,"stroke-width":o.a==="Conjonction"?.9:.62,"stroke-opacity":opacity,"stroke-linecap":"round","stroke-dasharray":dash},"",group);
           add("circle",{cx:x1,cy:y1,r:1.25,fill:o.color,"fill-opacity":opacity},"",group); add("circle",{cx:x2,cy:y2,r:1.25,fill:o.color,"fill-opacity":opacity},"",group);
@@ -2800,6 +2857,16 @@ return new kd(this.curr.time,a,b)};$jscomp.global.Object.defineProperties(H.prot
           add("text",{x:dx,y:dy-1.4,"text-anchor":"middle",fill:color,"font-size":6,"font-weight":700,"letter-spacing":.35},p.name.toUpperCase(),group);
           add("text",{x:dx,y:dy+5.1,"text-anchor":"middle",fill:"#ded3df","font-size":5.8},degreeLabel(p.lon).split(" ")[0],group);
         });
+        const liveMoment=new Date(),live=calculateTransitSnapshot(planets,liveMoment),liveHits=rankDailyHits(live.hits,10),liveNames=new Set(["Soleil","Lune","Mercure","Vénus","Mars","Jupiter"]);
+        live.current.filter((planet)=>liveNames.has(planet.name)).forEach((planet)=>{
+          const closest=liveHits.find((hit)=>hit.t.name===planet.name),phase=closest?.phase||"calme",angle=displayAngle(planet.lon),[x,y]=point(angle,218),color=planetColors[planet.name],speed=closest?Math.max(1.45,5.2-(1-closest.orb/closest.limit)*3.3):5.8,
+            group=add("g",{class:"live-transit","data-phase":phase,style:`color:${color};--transit-speed:${speed.toFixed(2)}s`});
+          add("title",{},`${planet.name} maintenant · ${degreeLabel(planet.lon)}${closest?` · ${closest.a.toLowerCase()} à ${closest.n.name} natal · orbe ${closest.orb.toFixed(2)}° · ${closest.phase}`:" · aucun aspect natal à moins de l’orbe retenu"}`,group);
+          add("circle",{class:"live-transit-halo",cx:x,cy:y,r:10.5,fill:"none",stroke:color,"stroke-width":1.2,"stroke-opacity":closest?.phase==="exact"?.95:.55},"",group);
+          add("circle",{cx:x,cy:y,r:6.8,fill:"#090711",stroke:color,"stroke-width":.55},"",group);
+          add("text",{class:"live-transit-symbol",x,y:y+4,"text-anchor":"middle",fill:color,"font-size":13,"font-family":"serif"},planet.glyph,group);
+        });
+        add("text",{x:c,y:188,"text-anchor":"middle",fill:"#7f91a5","font-size":5.4,"letter-spacing":1.2},"CIEL ACTUEL ANIMÉ · POSITIONS CALCULÉES");
         const drawAxis=(lon,label,color,width=.9)=>{const a=displayAngle(lon),[x1,y1]=point(a,67),[x2,y2]=point(a,380),[lx,ly]=point(a,384);add("line",{x1,y1,x2,y2,stroke:color,"stroke-width":width,"stroke-opacity":.82});add("circle",{cx:lx,cy:ly,r:12.5,fill:"#08060e",stroke:color,"stroke-width":.65});add("text",{x:lx,y:ly+3,"text-anchor":"middle",fill:color,"font-size":7,"font-weight":700},label);};
         drawAxis(angles.asc,"ASC","#f5eee4",1.25); drawAxis(normalizeDeg(angles.asc+180),"DSC","#9e94a6",.7);
         drawAxis(angles.mc,"MC","#e4c98f",1); drawAxis(normalizeDeg(angles.mc+180),"FC","#988764",.65);
@@ -2877,32 +2944,42 @@ return new kd(this.curr.time,a,b)};$jscomp.global.Object.defineProperties(H.prot
         tabs.innerHTML=planets.map((planet,index)=>`<button type="button" class="planet-tab${index===0?" active":""}" data-planet="${planet.name}"><b>${planet.glyph}</b>${planet.name}</button>`).join("");tabs.querySelectorAll(".planet-tab").forEach((button)=>button.addEventListener("click",()=>showPlanet(planets.find((planet)=>planet.name===button.dataset.planet))));showPlanet(planets[0]);
       }
       function immediateSnapshot(natal,date){
-        const {current,hits}=calculateTransitSnapshot(natal,date),top=[],categories=[hits.filter((hit)=>["Jupiter","Saturne","Uranus","Neptune","Pluton"].includes(hit.t.name)),hits.filter((hit)=>["Soleil","Mercure","Vénus","Mars"].includes(hit.t.name)),hits.filter((hit)=>hit.t.name==="Lune")];
+        date=atLocalHour(date,12);
+        const {current,hits}=calculateTransitSnapshot(natal,date),dailyHits=rankDailyHits(hits,12),lunarEvent=dailyLunarEvent(natal,date),top=[],categories=[dailyHits.filter((hit)=>["Jupiter","Saturne","Uranus","Neptune","Pluton"].includes(hit.t.name)),dailyHits.filter((hit)=>["Soleil","Mercure","Vénus","Mars"].includes(hit.t.name)),dailyHits.filter((hit)=>hit.t.name==="Lune")];
         categories.forEach((category)=>{const hit=category.find((candidate)=>!top.some((item)=>item.n.name===candidate.n.name&&item.a===candidate.a));if(hit)top.push(hit)});
         if(top.length<3)for(const hit of hits){if(!top.includes(hit))top.push(hit);if(top.length===3)break}
-        const mainHit=categories[2][0]||categories[1][0]||top[0]||null,background=categories[0][0]||null,main=mainHit?plainForecast(mainHit):null,moon=current.find((planet)=>planet.name==="Lune"),lunarHit=categories[2][0]||null,
+        const mainHit=lunarEvent||categories[2][0]||categories[1][0]||top[0]||null,background=categories[0][0]||null,main=mainHit?plainForecast(mainHit):null,moon=current.find((planet)=>planet.name==="Lune"),lunarHit=lunarEvent,
           lunarHouse=plainHouseContext[moon?.house]||{scene:"votre rythme intérieur",easy:"Écouter votre rythme avant de décider",hard:"Une réaction demande du recul",action:"laissez retomber la première réaction avant de choisir"},
           lunarHeadlines={1:"Prendre votre place sans réagir trop vite",2:"Revenir à ce qui vous sécurise vraiment",3:"Dire les choses plus clairement",4:"Protéger votre espace privé",5:"Donner une forme réelle à votre désir",6:"Ajuster le rythme de la journée",7:"Clarifier ce qui se joue dans la relation",8:"Nommer un sujet sensible au lieu de le subir",9:"Élargir votre point de vue",10:"Choisir la priorité qui mérite votre visibilité",11:"Faire avancer un projet avec le bon allié",12:"Ralentir pour retrouver de la clarté"},
           lunarSign=moon?zodiac[Math.floor(moon.lon/30)]:"—",lunarTone=lunarHit?aspectEditorial[lunarHit.a]:null,lunarSupportive=lunarHit&&["Sextile","Trigone"].includes(lunarHit.a),lunarHeadline=lunarHit?(lunarSupportive?lunarHouse.easy:lunarHouse.hard):(lunarHeadlines[moon?.house]||"Écouter le rythme réel de la journée"),
           lunarMeta=moon?`Lune à ${degreeLabel(moon.lon)}${moon.house?` · Maison ${moon.house}`:""}`:"Lune non disponible",
-          lunarMessage=lunarHit?`La Lune à ${degreeLabel(moon.lon)} traverse votre Maison ${moon.house} et forme ${aspectArticle(lunarHit.a)} ${lunarHit.a.toLowerCase()} à votre ${lunarHit.n.name} natal, avec un orbe de ${lunarHit.orb.toFixed(2)}° (${lunarHit.phase}). Pendant quelques heures, ${plainNatalTarget[lunarHit.n.name]||planetThemes[lunarHit.n.name]} réagit donc dans ${lunarHouse.scene}.`:`La Lune à ${degreeLabel(moon.lon)} traverse votre Maison ${moon.house}, qui concerne ${lunarHouse.scene}. Aucun aspect lunaire majeur n’est assez proche dans l’orbe retenu : cette maison donne le sujet du jour, sans imposer de scénario.`,
-          lunarFocus={moon,hit:lunarHit,sign:lunarSign,house:moon?.house||null,headline:lunarHeadline,meta:lunarMeta,message:lunarMessage,action:lunarHouse.action,key:`${lunarSign}-${moon?.house||0}-${lunarHit?`${lunarHit.a}-${lunarHit.n.name}`:"libre"}`},
-          ordered=[...domainConfigs].sort((a,b)=>a.name==="Général"?-1:b.name==="Général"?1:0),domains=ordered.map((config)=>({config,reading:buildDomainForecast(config,hits.slice(0,8),current)}));
-        return {date,current,hits,top,mainHit,background,main,domains,lunarFocus};
+          eventHour=lunarHit?new Intl.DateTimeFormat("fr-FR",{hour:"2-digit",minute:"2-digit"}).format(lunarHit.eventTime):null,
+          lunarMessage=lunarHit?`À midi, la Lune est à ${degreeLabel(moon.lon)} en Maison ${moon.house}. Son passage le plus précis de la journée se produit vers ${eventHour} : ${lunarHit.a.toLowerCase()} à votre ${lunarHit.n.name} natal, orbe ${lunarHit.orb.toFixed(2)}° (${lunarHit.phase}). Ce calcul active ${plainNatalTarget[lunarHit.n.name]||planetThemes[lunarHit.n.name]} dans ${lunarHouse.scene}.`:`À midi, la Lune est à ${degreeLabel(moon.lon)} en Maison ${moon.house}, secteur de ${lunarHouse.scene}. Aucun aspect lunaire au thème natal ne descend sous 2,5° au cours de cette journée : aucun événement précis n’est inventé.`,
+          lunarFocus={moon,hit:lunarHit,sign:lunarSign,house:moon?.house||null,headline:lunarHeadline,meta:lunarMeta,message:lunarMessage,action:lunarHouse.action,eventHour,key:lunarHit?`${lunarHit.a}-${lunarHit.n.name}`:`${lunarSign}-${moon?.house||0}-libre`},
+          specific=domainConfigs.filter((config)=>config.name!=="Général"),used=new Set(),domainMap=new Map();
+        specific.forEach((config)=>{const reading=buildDomainForecast(config,dailyHits,current,used);if(reading.hit)used.add(transitKey(reading.hit));domainMap.set(config.name,reading)});
+        const general=domainConfigs.find((config)=>config.name==="Général");domainMap.set("Général",buildDomainForecast(general,dailyHits,current));
+        const ordered=[general,...specific],domains=ordered.map((config)=>({config,reading:domainMap.get(config.name)}));
+        return {date,current,hits,dailyHits,top,mainHit,background,main,domains,lunarFocus};
       }
       function renderImmediateDay(snapshot,prefix,previousSnapshot=null){
         const dateFmt=new Intl.DateTimeFormat("fr-FR",{weekday:"long",day:"numeric",month:"long"}),headline=document.getElementById(`${prefix}ReadingHeadline`),summary=document.getElementById(`${prefix}ReadingSummary`),domains=document.getElementById(`${prefix}DomainCards`);
         document.getElementById(`${prefix}ReadingDate`).textContent=`${prefix==="today"?"Aujourd’hui":"Demain"} · ${dateFmt.format(snapshot.date)}`;
         const focus=snapshot.lunarFocus,sameFocus=prefix==="tomorrow"&&previousSnapshot?.lunarFocus?.key===focus.key,
           lunarShift=sameFocus&&focus.moon&&previousSnapshot.lunarFocus.moon?normalizeDeg(focus.moon.lon-previousSnapshot.lunarFocus.moon.lon):0,
-          evolution=sameFocus?` Le même secteur reste actif, mais la Lune avance de ${lunarShift.toFixed(1)}° : il s’agit d’une évolution du climat, pas d’une seconde prédiction identique.`:"",
           background=snapshot.background?` En toile de fond, ${snapshot.background.t.name} ${snapshot.background.a.toLowerCase()} votre ${snapshot.background.n.name} natal décrit un processus plus lent ; il ne remplace pas le signal quotidien.`:"";
-        headline.textContent=sameFocus?`Le sujet se poursuit et évolue : ${focus.headline.charAt(0).toLowerCase()+focus.headline.slice(1)}`:focus.headline;
-        summary.textContent=`${focus.message} Conseil du jour : ${focus.action}.${evolution}${background}`;
-        domains.innerHTML=snapshot.domains.map(({config,reading})=>`<div class="immediate-domain"><b>${config.name}</b><span>${reading.title}. ${reading.action}</span></div>`).join("");
+        if(sameFocus&&focus.hit&&previousSnapshot.lunarFocus.hit){
+          const before=previousSnapshot.lunarFocus.hit.orb,after=focus.hit.orb,direction=after<before?"se rapproche de l’exactitude":"s’éloigne après son passage le plus précis";
+          headline.textContent=`Évolution mesurée : la Lune ${direction}`;
+          summary.textContent=`Le même transit traverse minuit, mais ses valeurs changent : la Lune avance de ${lunarShift.toFixed(1)}° et l’orbe passe de ${before.toFixed(2)}° à ${after.toFixed(2)}°. Demain, le passage le plus proche est vers ${focus.eventHour}. ${focus.action}.`;
+        }else{
+          headline.textContent=focus.headline;
+          summary.textContent=`${focus.message} Conseil ${prefix==="today"?"du jour":"pour demain"} : ${focus.action}.${prefix==="today"?background:""}`;
+        }
+        domains.innerHTML=snapshot.domains.map(({config,reading})=>`<div class="immediate-domain"><b>${config.name}</b><span>${reading.title}<br><small>${reading.evidence}</small></span></div>`).join("");
       }
       function renderTodayReading(natal) {
-        const today=new Date(),tomorrow=new Date(today);tomorrow.setDate(tomorrow.getDate()+1);
+        const today=atLocalHour(new Date(),12),tomorrow=new Date(today);tomorrow.setDate(tomorrow.getDate()+1);
         const todaySnapshot=immediateSnapshot(natal,today),tomorrowSnapshot=immediateSnapshot(natal,tomorrow),cards=document.getElementById("todayTransitCards");
         renderImmediateDay(todaySnapshot,"today");renderImmediateDay(tomorrowSnapshot,"tomorrow",todaySnapshot);
         cards.innerHTML=todaySnapshot.top.map((hit)=>{const plain=plainForecast(hit),peak=estimatePeak(hit,today),type=["Jupiter","Saturne","Uranus","Neptune","Pluton"].includes(hit.t.name)?"Fond de période":hit.t.name==="Lune"?"Déclencheur émotionnel":"Mouvement personnel";return `<article class="today-transit-card"><small>${type} · ${hit.phase}</small><h4>${plain.headline}</h4><p>${plain.message} ${plain.action}</p><small class="source-ref">${hit.t.glyph} ${hit.t.name} ${hit.a.toLowerCase()} ${hit.n.glyph} ${hit.n.name} · orbe ${hit.orb.toFixed(2)}° · pic estimé ${new Intl.DateTimeFormat("fr-FR",{day:"numeric",month:"short"}).format(peak)} · Hand/Brady</small></article>`}).join("");
