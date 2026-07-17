@@ -251,7 +251,7 @@
         display: block;
         margin: 0 0 8px;
       }
-      input {
+      input, select {
         width: 100%;
         border: 1px solid rgba(255, 255, 255, 0.13);
         border-radius: 12px;
@@ -260,9 +260,12 @@
         padding: 14px;
         outline: none;
       }
-      input:focus {
+      select { appearance:auto; color-scheme:dark; }
+      input:focus, select:focus {
         border-color: var(--gold);
       }
+      .birthdate-selects { display:grid; grid-template-columns:.72fr 1.25fr 1fr; gap:7px; }
+      .birthdate-selects select { min-width:0; padding:14px 8px; }
       .wide {
         grid-column: span 2;
       }
@@ -1360,8 +1363,13 @@
                 >
               </div>
               <div>
-                <label for="birthdate">Date de naissance</label
-                ><input id="birthdate" type="date" required>
+                <label id="birthdateLabel">Date de naissance</label>
+                <div class="birthdate-selects" role="group" aria-labelledby="birthdateLabel">
+                  <select id="birthDay" required aria-label="Jour de naissance"><option value="">Jour</option></select>
+                  <select id="birthMonth" required aria-label="Mois de naissance"><option value="">Mois</option></select>
+                  <select id="birthYear" required aria-label="Année de naissance"><option value="">Année</option></select>
+                </div>
+                <input id="birthdate" type="hidden">
               </div>
               <div>
                 <label for="birthtime">Heure précise</label
@@ -3492,7 +3500,16 @@ return new kd(this.curr.time,a,b)};$jscomp.global.Object.defineProperties(H.prot
       }
       setCosmicFx(safeStorage.get("astraeFx") !== "off");
       fxToggle.addEventListener("click", () => setCosmicFx(fxToggle.getAttribute("aria-pressed") !== "true"));
-      document.getElementById("birthdate").max=localIso(new Date());
+      const birthDay=document.getElementById("birthDay"),birthMonth=document.getElementById("birthMonth"),birthYear=document.getElementById("birthYear"),birthdate=document.getElementById("birthdate"),monthNames=["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"],currentYear=new Date().getFullYear();
+      monthNames.forEach((name,index)=>birthMonth.insertAdjacentHTML("beforeend",`<option value="${String(index+1).padStart(2,"0")}">${name}</option>`));
+      for(let year=currentYear;year>=1900;year--)birthYear.insertAdjacentHTML("beforeend",`<option value="${year}">${year}</option>`);
+      function syncBirthdate(){
+        const previous=birthDay.value,year=Number(birthYear.value)||2000,month=Number(birthMonth.value)||1,days=new Date(year,month,0).getDate();
+        birthDay.innerHTML='<option value="">Jour</option>'+Array.from({length:days},(_,index)=>{const day=String(index+1).padStart(2,"0");return `<option value="${day}">${index+1}</option>`}).join("");
+        if(previous&&Number(previous)<=days)birthDay.value=previous;
+        birthdate.value=birthYear.value&&birthMonth.value&&birthDay.value?`${birthYear.value}-${birthMonth.value}-${birthDay.value}`:"";
+      }
+      [birthDay,birthMonth,birthYear].forEach((select)=>select.addEventListener("change",syncBirthdate));syncBirthdate();
       document.getElementById("reset").onclick = () => {
         safeStorage.remove("astraeProfile");
         location.reload();
