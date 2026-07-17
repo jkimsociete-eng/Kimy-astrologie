@@ -346,6 +346,15 @@
       .result-analysis { display:grid; gap:8px; margin-top:12px; }
       .result-analysis p { padding-top:8px; border-top:1px solid rgba(255,255,255,.06); }
       .result-analysis b { color:#dfca98; font-weight:600; }
+      .result-more { margin-top:16px; border-top:1px solid rgba(214,182,117,.16); }
+      .result-more summary { display:flex; justify-content:space-between; gap:12px; padding:13px 0 4px; color:#d9c38b; font-size:9px; letter-spacing:.08em; text-transform:uppercase; cursor:pointer; list-style:none; }
+      .result-more summary::-webkit-details-marker { display:none; }
+      .result-more summary span { transition:transform .25s ease; }
+      .result-more[open] summary span { transform:rotate(45deg); }
+      .result-more > div { display:grid; gap:9px; padding:10px 0 2px; }
+      .result-more section { padding:11px 12px; border-radius:10px; background:rgba(255,255,255,.028); }
+      .result-more section b { display:block; margin-bottom:4px; color:#e0cb99; font-size:9px; }
+      .result-more section p { font-size:10px; line-height:1.62; }
       .gematria-breakdown { display:block; margin-top:8px; color:#8f8596; font-size:10px; line-height:1.55; direction:rtl; text-align:left; }
       .natal-summary {
         margin:16px 0;
@@ -389,6 +398,18 @@
       .planet-aspect-links { margin-top:11px; padding:13px; border-radius:11px; background:rgba(119,183,213,.045); }
       .planet-aspect-links b { display:block; margin-bottom:7px; color:#b8cdd6; font-size:8px; letter-spacing:.1em; text-transform:uppercase; }
       .planet-aspect-links p { margin:4px 0; color:#9e96a4; font-size:9px; line-height:1.5; }
+      .profile-synthesis { margin:16px 0; padding:clamp(26px,4vw,42px); background:radial-gradient(circle at 90% 0,rgba(214,182,117,.11),transparent 34%),linear-gradient(145deg,rgba(17,13,28,.98),rgba(10,8,18,.98)); }
+      .profile-synthesis-head { max-width:780px; }
+      .profile-synthesis h3 { margin:7px 0 9px; font:600 clamp(34px,4vw,48px)/1.03 "Cormorant Garamond"; }
+      .profile-synthesis-head p { margin:0; color:#aaa1b0; font-size:11px; line-height:1.7; }
+      .profile-domain-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:24px; }
+      .profile-domain { padding:19px; border:1px solid rgba(255,255,255,.08); border-radius:15px; background:rgba(255,255,255,.028); }
+      .profile-domain:last-child { grid-column:1/-1; }
+      .profile-domain span { color:#d9c38b; font-size:8px; letter-spacing:.12em; text-transform:uppercase; }
+      .profile-domain h4 { margin:7px 0 8px; font:600 24px/1.08 "Cormorant Garamond"; }
+      .profile-domain p { margin:0; color:#b2a9b7; font-size:10px; line-height:1.65; }
+      .profile-domain small { display:block; margin-top:10px; color:#746b7d; font-size:8px; line-height:1.45; }
+      .profile-domain-conclusion { margin-top:12px; padding:18px 20px; border-left:2px solid var(--gold); border-radius:0 13px 13px 0; background:rgba(214,182,117,.055); color:#ddd2de; font:500 18px/1.55 "Cormorant Garamond"; }
       .today-reading { margin:16px 0; padding:clamp(26px,4vw,42px); overflow:hidden; border-color:rgba(119,183,213,.26); background:radial-gradient(circle at 90% 0,rgba(119,183,213,.12),transparent 34%),linear-gradient(150deg,rgba(10,16,24,.98),rgba(14,10,24,.98)); }
       .today-reading-head { display:flex; align-items:end; justify-content:space-between; gap:22px; }
       .today-reading-head p { max-width:700px; margin:0; color:#a8a0ae; font-size:11px; line-height:1.65; }
@@ -414,10 +435,17 @@
       .immediate-day.tomorrow time { color:#d8c38e; }
       .immediate-day h4 { margin:8px 0 8px; font:600 29px/1.05 "Cormorant Garamond"; }
       .immediate-day > p { min-height:72px; margin:0; color:#c9c2ce; font-size:11px; line-height:1.65; }
-      .immediate-domain-list { display:grid; gap:5px; margin-top:15px; }
-      .immediate-domain { display:grid; grid-template-columns:62px 1fr; gap:9px; padding-top:7px; border-top:1px solid rgba(255,255,255,.065); }
-      .immediate-domain b { color:#d7c58f; font-size:8px; letter-spacing:.09em; text-transform:uppercase; }
-      .immediate-domain span { color:#a69daa; font-size:9px; line-height:1.4; }
+      .immediate-domain-list { display:grid; gap:6px; margin-top:15px; }
+      .immediate-domain { padding:0; border-top:1px solid rgba(255,255,255,.07); }
+      .immediate-domain summary { display:grid; grid-template-columns:68px 1fr auto; gap:8px; align-items:center; padding:10px 0; cursor:pointer; list-style:none; }
+      .immediate-domain summary::-webkit-details-marker { display:none; }
+      .immediate-domain summary b { color:#d7c58f; font-size:8px; letter-spacing:.09em; text-transform:uppercase; }
+      .immediate-domain summary strong { color:#c6bdca; font:600 15px/1.15 "Cormorant Garamond"; }
+      .immediate-domain summary i { color:#81778a; font-style:normal; transition:rotate .2s ease; }
+      .immediate-domain[open] summary i { rotate:45deg; }
+      .immediate-domain p { margin:0 0 8px; color:#aaa1b0; font-size:9.5px; line-height:1.58; }
+      .immediate-domain .domain-action { margin:0 0 8px; padding:8px 10px; border-radius:9px; background:rgba(123,197,156,.06); color:#b9cdbf; font-size:9px; line-height:1.5; }
+      .immediate-domain small { display:block; margin-bottom:9px; color:#6f6678; font-size:7.5px; line-height:1.4; }
       .immediate-day button { margin-top:15px; padding:9px 12px; background:transparent; color:#cee6f0; border:1px solid rgba(119,183,213,.25); font-size:9px; }
       .immediate-day.tomorrow button { color:#ddca9a; border-color:rgba(214,182,117,.25); }
       .today-evidence { margin-top:12px; }
@@ -723,7 +751,7 @@
       }
       #natalChart {
         display: block;
-        width: min(100%, 820px);
+        width: min(100%, 660px);
         height: auto;
         margin: 8px auto 28px;
         padding: clamp(5px, 1.5vw, 15px);
@@ -739,7 +767,7 @@
       #natalChart .aspect-connection { cursor:help; transition:filter .2s ease, opacity .2s ease; }
       #natalChart .aspect-connection:hover { filter:drop-shadow(0 0 5px currentColor); }
       #natalChart .chart-star { transform-box:fill-box; transform-origin:center; animation:chart-twinkle var(--star-speed,4s) ease-in-out infinite; }
-      #natalChart .chart-shooting { stroke-dasharray:2 150; stroke-dashoffset:152; animation:chart-shoot 9s linear infinite; }
+      #natalChart .chart-shooting { stroke-dasharray:28 150; stroke-dashoffset:178; animation:chart-shoot 6.8s linear infinite; }
       #natalChart .aspect-connection[data-aspect="Sextile"] line,
       #natalChart .aspect-connection[data-aspect="Trigone"] line { animation:aspect-flow var(--aspect-speed,5s) linear infinite; }
       #natalChart .aspect-connection[data-aspect="Carré"] line,
@@ -750,8 +778,8 @@
       #natalChart .live-transit[data-phase="exact"] .live-transit-halo { animation-duration:1.35s; }
       #natalChart .live-transit[data-phase="appliquant"] .live-transit-halo { animation-direction:normal; }
       #natalChart .live-transit[data-phase="séparant"] .live-transit-halo { animation-direction:reverse; opacity:.58; }
-      @keyframes chart-twinkle { 0%,100%{opacity:.18;scale:.7} 50%{opacity:.95;scale:1.35} }
-      @keyframes chart-shoot { 0%,72%{opacity:0;stroke-dashoffset:152} 74%{opacity:.9} 88%{opacity:0;stroke-dashoffset:0} 100%{opacity:0;stroke-dashoffset:0} }
+      @keyframes chart-twinkle { 0%,100%{opacity:.32;scale:.72} 50%{opacity:1;scale:1.65} }
+      @keyframes chart-shoot { 0%,64%{opacity:0;stroke-dashoffset:178} 67%{opacity:1} 88%{opacity:0;stroke-dashoffset:0} 100%{opacity:0;stroke-dashoffset:0} }
       @keyframes aspect-flow { to{stroke-dashoffset:-18} }
       @keyframes aspect-tension { 0%,100%{stroke-opacity:.2} 50%{stroke-opacity:.72;filter:drop-shadow(0 0 2px currentColor)} }
       @keyframes aspect-union { 0%,100%{stroke-opacity:.28} 50%{stroke-opacity:.9;stroke-width:1.35} }
@@ -1210,7 +1238,8 @@
         }
         .natal-pillars { grid-template-columns:1fr 1fr; }
         .natal-deep-head,.today-reading-head { align-items:flex-start; flex-direction:column; }
-        .angle-deep-grid,.planet-meaning-grid,.today-transit-grid,.today-domain-grid { grid-template-columns:1fr; }
+        .angle-deep-grid,.planet-meaning-grid,.today-transit-grid,.today-domain-grid,.profile-domain-grid { grid-template-columns:1fr; }
+        .profile-domain:last-child { grid-column:auto; }
         .immediate-days { grid-template-columns:1fr; }
         .life-timeline-stats { grid-template-columns:1fr; }
         .planet-tabs { flex-wrap:nowrap; overflow-x:auto; padding-bottom:4px; }
@@ -1343,9 +1372,9 @@
                 ><input id="birthplace" type="text" autocomplete="off" required placeholder="Nancy, France">
               </div>
               <div class="wide">
-                <label for="hebrewname">Nom en caractères hébraïques <span aria-hidden="true">·</span> facultatif</label>
+                <label for="hebrewname">Prénom en hébreu <span aria-hidden="true">·</span> totalement facultatif</label>
                 <input id="hebrewname" type="text" dir="auto" autocomplete="off" placeholder="Ex. מרים">
-                <small class="field-hint">Utilisé uniquement pour la gématrie standard. Sans ce nom, la date et le mois hébraïques sont tout de même calculés.</small>
+                <small class="field-hint">Laissez vide si vous ne connaissez pas son orthographe hébraïque. Cela ne change ni votre thème astral ni vos horoscopes ; seule la gématrie du prénom sera omise.</small>
               </div>
               <div class="consent">
                 Ces informations sont conservées uniquement dans ce navigateur
@@ -1485,6 +1514,11 @@
             <div class="angle-deep-grid" id="angleDeepGrid"></div>
             <section class="planet-reading"><h4>Explorer chacune de vos planètes</h4><div class="planet-tabs" id="planetTabs"></div><article class="planet-detail" id="planetDetail"></article></section>
           </article>
+          <article class="card profile-synthesis">
+            <div class="profile-synthesis-head"><div class="value">Votre synthèse personnelle</div><h3>Votre profil, domaine par domaine</h3><p>Une lecture finale qui relie vos placements les plus importants au lieu de vous laisser avec une liste de signes et de planètes séparés.</p></div>
+            <div class="profile-domain-grid" id="profileDomainGrid"><div class="empty">Construction de votre synthèse personnelle…</div></div>
+            <div class="profile-domain-conclusion" id="profileDomainConclusion">Recherche du fil rouge de votre thème…</div>
+          </article>
           <article class="card today-reading">
             <div class="today-reading-head"><div><div class="value">À voir en premier · calculé depuis votre thème exact</div><h3>Votre horoscope d’aujourd’hui et de demain</h3><p>Deux lectures immédiates, obtenues en comparant le ciel réel de chaque journée à vos positions natales, votre Ascendant et votre Milieu du Ciel.</p></div></div>
             <div class="immediate-days">
@@ -1516,6 +1550,7 @@
               <div class="value" id="ascendantValue">Calcul en cours</div>
               <p id="ascendantText">L’Ascendant dépend de l’heure et des coordonnées exactes du lieu de naissance.</p>
               <span class="status" id="locationStatus">Angle natal</span>
+              <details class="result-more"><summary>Développer mon Ascendant <span>+</span></summary><div id="ascendantDetails"></div></details>
             </article>
             <article class="card result">
               <div class="icon">MC</div>
@@ -1523,6 +1558,7 @@
               <div class="value" id="mcValue">Calcul en cours</div>
               <p id="mcText">Orientation, vocation, visibilité et rapport à l’accomplissement.</p>
               <span class="status">Axe de vocation</span>
+              <details class="result-more"><summary>Développer ma vocation <span>+</span></summary><div id="mcDetails"></div></details>
             </article>
             <article class="card result">
               <div class="icon">☉</div>
@@ -1530,6 +1566,7 @@
               <div class="value" id="sunSign"></div>
               <p id="sunText"></p>
               <span class="status">Soleil natal</span>
+              <details class="result-more"><summary>Développer mon Soleil <span>+</span></summary><div id="sunDetails"></div></details>
             </article>
             <article class="card result">
               <div class="icon">☯</div>
@@ -1537,13 +1574,14 @@
               <div class="value" id="chinese"></div>
               <p id="chineseText">Calcul selon l’année du calendrier luni-solaire chinois.</p>
               <span class="status">Lecture annuelle</span>
+              <details class="result-more"><summary>Développer cette énergie <span>+</span></summary><div id="chineseDetails"></div></details>
             </article>
             <article class="card result">
               <div class="icon">✦</div>
               <h3>Numérologie</h3>
               <div class="value" id="lifePath"></div>
               <p id="lifeText"></p>
-              <span class="status">Lecture complémentaire</span>
+              <details class="result-more"><summary>Développer ma numérologie <span>+</span></summary><div id="numerologyDetails"></div></details>
             </article>
             <article class="card result">
               <div class="icon">עץ</div>
@@ -1551,6 +1589,7 @@
               <div class="value" id="kabbalahValue">Conversion du calendrier hébraïque…</div>
               <div class="result-analysis" id="kabbalahText"><p>Calcul de votre mois hébraïque et de sa correspondance symbolique.</p></div>
               <span class="status" id="kabbalahStatus">Sefer Yetzirah · lecture séparée</span>
+              <details class="result-more"><summary>Comprendre cette lecture <span>+</span></summary><div id="kabbalahDetails"></div></details>
             </article>
             <article class="card result">
               <div class="icon">✺</div>
@@ -1558,6 +1597,7 @@
               <div class="value" id="chartSignature">Calcul en cours</div>
               <p id="chartSignatureText">Synthèse des éléments et des modes dominants de vos positions natales.</p>
               <span class="status">Dominante calculée</span>
+              <details class="result-more"><summary>Développer ma signature <span>+</span></summary><div id="signatureDetails"></div></details>
             </article>
           </div>
           <article class="card daily">
@@ -2004,6 +2044,20 @@ return new kd(this.curr.time,a,b)};$jscomp.global.Object.defineProperties(H.prot
         22:{gift:"donner une forme durable à une vision de grande ampleur",challenge:"ne pas vous écraser sous l’exigence ou la peur de l’échec",key:"construire le grand projet par étapes mesurables"},
         33:{gift:"transmettre, apaiser et élever par la présence et l’exemple",challenge:"éviter le rôle de sauveur et la culpabilité",key:"prendre soin sans renoncer à la réciprocité"},
       };
+      const numerologyDomains={
+        1:["Vous avez besoin de liens qui respectent votre autonomie. Dire clairement ce que vous voulez évite que l’indépendance devienne distance.","Les contextes où vous pouvez initier, décider ou porter une responsabilité stimulent ce chemin.","L’impatience, l’orgueil défensif ou la peur de demander de l’aide peuvent vous isoler.","Choisissez une initiative précise et associez-y une personne ressource."],
+        2:["Vous percevez finement les besoins de l’autre, mais l’harmonie ne doit pas vous coûter votre propre voix.","Médiation, coopération et travail de précision relationnelle valorisent vos qualités.","L’hésitation et l’hypersensibilité aux réactions extérieures peuvent retarder vos choix.","Formulez une limite simple avant de chercher le compromis."],
+        3:["Le dialogue, l’humour et la créativité nourrissent vos liens ; la sincérité donne de la profondeur au charme.","Expression, création, communication et transmission sont des terrains naturels.","La dispersion ou le besoin d’être apprécié peuvent laisser les projets inachevés.","Terminez une création avant d’en ouvrir une nouvelle."],
+        4:["Vous aimez construire du fiable ; veillez à laisser une place à la spontanéité et au changement de l’autre.","Organisation, technique, gestion et projets de long terme mettent votre solidité en valeur.","Le contrôle, la rigidité ou la peur de l’imprévu peuvent épuiser votre élan.","Conservez une structure, mais assouplissez une règle devenue inutile."],
+        5:["La relation doit rester vivante et respirable. La liberté devient féconde lorsqu’elle s’accompagne de parole et de loyauté.","Mobilité, découverte, commerce, communication et environnements changeants vous stimulent.","L’ennui peut déclencher une fuite ou une accumulation d’expériences sans intégration.","Donnez un cadre concret à une envie de changement."],
+        6:["Vous vous engagez profondément et prenez soin, à condition de ne pas devenir responsable du bonheur de chacun.","Service, soin, esthétique, enseignement et coordination humaine peuvent vous accomplir.","Perfectionnisme, culpabilité et rôle de sauveur créent une charge invisible.","Aidez après avoir vérifié ce qui vous appartient réellement."],
+        7:["Vous recherchez une intimité profonde et avez aussi besoin de solitude ; expliquer ce retrait protège la confiance.","Recherche, analyse, expertise, écriture ou spiritualité structurée correspondent à votre profondeur.","Le doute et la suranalyse peuvent couper l’expérience de l’action.","Partagez une conclusion provisoire au lieu d’attendre la certitude absolue."],
+        8:["Vous attendez loyauté et solidité. La vulnérabilité évite que le rapport de force remplace la proximité.","Direction, finance, stratégie et matérialisation de projets mobilisent votre puissance.","Le contrôle et l’identification au résultat peuvent durcir les relations et le corps.","Définissez la réussite par un résultat et par la qualité humaine du chemin."],
+        9:["Votre générosité est vaste ; une relation saine exige aussi réciprocité, limites et fin des cycles arrivés à terme.","Transmission, création, accompagnement et projets collectifs donnent du sens à l’expérience.","Idéalisation, sacrifice et difficulté à clôturer entretiennent la fatigue émotionnelle.","Achevez ou libérez consciemment ce qui n’a plus de rôle."],
+        11:["Votre sensibilité capte vite les non-dits. Vous avez besoin de liens authentiques, mais aussi de limites qui distinguent intuition et projection.","Vision, création, communication, accompagnement ou innovation peuvent traduire votre inspiration en contribution visible.","La surcharge nerveuse, l’idéalisation et le doute de soi apparaissent quand trop de signaux restent sans forme.","Notez l’intuition, vérifiez-la dans les faits, puis transformez-la en parole, création ou décision mesurable."],
+        22:["Vous cherchez un lien capable de soutenir une vision durable ; partager les responsabilités évite de tout porter.","Les systèmes complexes, la conduite de projet et les réalisations à impact donnent une forme à votre potentiel.","L’ampleur de l’ambition peut produire pression, paralysie ou peur de ne jamais être à la hauteur.","Découpez la vision en prochaine étape datée et vérifiable."],
+        33:["Votre présence peut apaiser et soutenir, mais l’amour n’exige ni sauvetage ni sacrifice permanent.","Soin, enseignement, création et transmission collective valorisent votre responsabilité humaine.","La culpabilité et l’exigence morale peuvent faire oublier vos propres besoins.","Pratiquez la réciprocité : recevoir fait partie de votre manière de transmettre."],
+      };
       const hebrewMonthProfiles={
         Nisan:{label:"Nissan",sign:"Bélier",meaning:"commencement, sortie d’un ancien cadre et courage d’initier"},
         Iyar:{label:"Iyar",sign:"Taureau",meaning:"incarnation, patience et consolidation"},
@@ -2036,11 +2090,12 @@ return new kd(this.curr.time,a,b)};$jscomp.global.Object.defineProperties(H.prot
         return {total,reduced,breakdown:letters.map((letter)=>`${letter} ${gematriaValues[letter]}`).join(" · ")};
       }
       function renderKabbalah(profile){
-        const info=hebrewCalendarInfo(profile.birthdate),gematria=standardGematria(profile.hebrewname||""),value=document.getElementById("kabbalahValue"),text=document.getElementById("kabbalahText"),status=document.getElementById("kabbalahStatus");
+        const info=hebrewCalendarInfo(profile.birthdate),gematria=standardGematria(profile.hebrewname||""),value=document.getElementById("kabbalahValue"),text=document.getElementById("kabbalahText"),status=document.getElementById("kabbalahStatus"),details=document.getElementById("kabbalahDetails");
         value.textContent=`${info.day} ${info.label} ${info.year} · ${info.sign}`;
         const base=`<p><b>Votre date hébraïque.</b> Vous êtes né·e le ${info.day} ${info.label} ${info.year}. Dans la correspondance des douze mois transmise autour du Sefer Yetzirah, ${info.label} est relié au ${info.sign} : le fil symbolique porte sur ${info.meaning}.</p><p><b>Comment le lire.</b> Cette couche ne remplace pas votre Soleil tropical ; elle montre comment une tradition distincte organise le mois, les lettres et le zodiaque.</p>`;
         if(gematria){text.innerHTML=`${base}<p><b>Gématrie standard du nom.</b> La somme de vos lettres hébraïques vaut <strong>${gematria.total}</strong>. Sa réduction secondaire vaut ${gematria.reduced}, mais elle reste une lecture numérologique distincte : une égalité de valeurs n’a de sens qu’en comparaison avec des mots hébraïques choisis et contextualisés.</p><span class="gematria-breakdown">${gematria.breakdown}</span><small class="source-ref">Méthode · Mispar hechrechi (valeurs 1–400) · <a href="https://www.chabad.org/library/article_cdo/aid/4069287/jewish/The-Hebrew-Alphabet.htm" target="_blank" rel="noreferrer">alphabet hébraïque</a> · <a href="https://www.sefaria.org/Sefer_Yetzirah" target="_blank" rel="noreferrer">Sefer Yetzirah</a></small>`;status.textContent=`Gématrie calculée · valeur ${gematria.total}`}
-        else{text.innerHTML=`${base}<p><b>Pour calculer la gématrie.</b> Ajoutez votre nom en caractères hébraïques dans vos informations. Une transcription latine automatique serait ambiguë ; Kimy ne la devine donc pas.</p><small class="source-ref">Cadre · <a href="https://www.sefaria.org/Sefer_Yetzirah" target="_blank" rel="noreferrer">Sefer Yetzirah</a> · gématrie standard documentée séparément</small>`;status.textContent="Date hébraïque calculée · nom facultatif"}
+        else{text.innerHTML=`${base}<p><b>Votre lecture est bien complète.</b> La gématrie du prénom n’est simplement pas affichée car aucun prénom hébreu n’a été fourni. C’est facultatif et cela ne bloque ni le thème astral ni les horoscopes.</p><small class="source-ref">Cadre · <a href="https://www.sefaria.org/Sefer_Yetzirah" target="_blank" rel="noreferrer">Sefer Yetzirah</a> · gématrie standard documentée séparément</small>`;status.textContent="Date hébraïque calculée · prénom facultatif"}
+        details.innerHTML=`<section><b>Ce qui est calculé</b><p>La date civile est convertie dans le calendrier hébraïque : ${info.day} ${info.label} ${info.year}. Le mois est ensuite relié à sa correspondance zodiacale traditionnelle.</p></section><section><b>Ce qui reste séparé</b><p>Cette symbolique ne modifie aucune position astronomique de votre thème occidental. ${gematria?`La valeur ${gematria.total} vient uniquement des lettres hébraïques réellement saisies.`:"Sans prénom hébreu, Kimy n’invente aucune transcription ni aucune valeur."}</p></section>`;
       }
       const zodiac = [
         "Bélier",
@@ -2916,6 +2971,7 @@ return new kd(this.curr.time,a,b)};$jscomp.global.Object.defineProperties(H.prot
         document.getElementById("natalSummaryText").textContent = `Votre thème rassemble ${elementText[element]}. Le mode ${mode} précise votre manière d’avancer : ${modeText[mode]}. Cette dominante ne remplace pas la complexité du thème ; elle donne le fil rouge qui relie votre Soleil, votre Lune et votre Ascendant.`;
         document.getElementById("chartSignature").textContent = `${element} ${dominantWord} · mode ${mode}`;
         document.getElementById("chartSignatureText").innerHTML = `Votre dominante ${element} décrit ${elementText[element]}. Le mode ${mode} montre que ${modeText[mode]}. <b>Votre force :</b> combiner cette ressource avec la complexité réelle de vos planètes. <b>Vigilance :</b> ne pas transformer la dominante en réflexe unique ; les éléments moins présents doivent être cultivés consciemment.`;
+        document.getElementById("signatureDetails").innerHTML=`<section><b>Élément dominant · ${element}</b><p>${elementText[element]}. Score pondéré : Feu ${elements[0]}, Terre ${elements[1]}, Air ${elements[2]}, Eau ${elements[3]}.</p></section><section><b>Mode dominant · ${mode}</b><p>${modeText[mode]}. Scores : cardinal ${modes[0]}, fixe ${modes[1]}, mutable ${modes[2]}.</p></section><section><b>Comment l’utiliser</b><p>La dominante montre une facilité spontanée, pas toute votre personnalité. Cultiver consciemment les éléments moins représentés évite que cette force devienne un automatisme.</p></section>`;
         document.getElementById("sunText").innerHTML = `Votre Soleil en ${sunSignName}, Maison ${sun.house||"—"}, décrit la direction consciente de votre personnalité : vous vous construisez ${sunProfile.style}. <b>Potentiel :</b> ${sunProfile.gift}. <b>Défi :</b> ${sunProfile.challenge}.${sunAspect?` Son aspect le plus serré est un ${sunAspect.a.toLowerCase()} à ${sunOther.name} : ${sunPair?.title||"deux fonctions doivent apprendre à coopérer"}. ${sunPair?`La force possible est ${sunPair.gift} ; le risque est ${sunPair.risk}.`:""}`:" Aucun aspect majeur au Soleil ne domine dans les orbes retenus."}`;
         const pillars = [
           { label:"Essence consciente", title:`Soleil en ${zodiac[Math.floor(sun.lon/30)]}`, text:`En Maison ${sun.house || "—"}, votre volonté cherche à s’exprimer à travers ${houseMeanings[sun.house]?.toLowerCase() || "votre direction personnelle"}. ${signTexts[zodiac[Math.floor(sun.lon/30)]]}`, source:"Greene · Sasportas" },
@@ -2942,6 +2998,20 @@ return new kd(this.curr.time,a,b)};$jscomp.global.Object.defineProperties(H.prot
           detail.innerHTML=`<div class="planet-detail-head"><div><div class="value">${planet.name} natal · ${houseAvailable?`Maison ${planet.house}`:"maison à confirmer"}</div><h4>${planet.glyph} ${planet.name} en ${sign}</h4><p>${role.role}</p></div><div class="planet-degree">${degreeLabel(planet.lon)}<br>${condition.label}</div></div><div class="planet-meaning-grid"><div class="planet-meaning-block"><b>Ce que ce placement signifie</b>${planet.name} représente ${role.role}. En ${sign}, cette fonction s’exprime ${signMeaning.style}. Cela donne une coloration précise à votre manière de ${role.strength}.</div><div class="planet-meaning-block"><b>Où cela se manifeste</b>${location}</div><div class="planet-meaning-block"><b>Potentiel et vigilance</b>Potentiel : ${signMeaning.gift} et ${role.strength}. Vigilance : ${signMeaning.challenge}, ainsi que la tendance à ${role.shadow}.</div></div><div class="planet-aspect-links"><b>Les aspects qui modifient ce placement</b>${links}</div><small class="source-ref">Synthèse originale · Demetra George (condition) · Sasportas (maisons) · Arroyo (signes) · Tompkins (aspects)</small>`;
         }
         tabs.innerHTML=planets.map((planet,index)=>`<button type="button" class="planet-tab${index===0?" active":""}" data-planet="${planet.name}"><b>${planet.glyph}</b>${planet.name}</button>`).join("");tabs.querySelectorAll(".planet-tab").forEach((button)=>button.addEventListener("click",()=>showPlanet(planets.find((planet)=>planet.name===button.dataset.planet))));showPlanet(planets[0]);
+      }
+      function buildProfileSynthesis(planets,aspects,angles){
+        const byName=(name)=>planets.find((planet)=>planet.name===name), placement=(planet)=>`${planet.name} en ${zodiac[Math.floor(planet.lon/30)]}${planet.house?`, Maison ${planet.house}`:""}`,
+          closest=(name)=>aspects.filter((aspect)=>aspect.p1.name===name||aspect.p2.name===name).sort((a,b)=>a.orb-b.orb)[0], evidence=(planet)=>{const aspect=closest(planet.name),other=aspect?(aspect.p1.name===planet.name?aspect.p2:aspect.p1):null;return `${placement(planet)}${aspect?` · ${aspect.a} ${other.name}, orbe ${aspect.orb.toFixed(2)}°`:" · aucun aspect majeur serré dans les orbes retenus"}`},
+          sun=byName("Soleil"),moon=byName("Lune"),venus=byName("Vénus"),mars=byName("Mars"),saturn=byName("Saturne"),jupiter=byName("Jupiter"),asc=angles?zodiac[Math.floor(angles.asc/30)]:null,mc=angles?zodiac[Math.floor(angles.mc/30)]:null,
+          cards=[
+            ["Identité","Votre manière d’être vous-même",`Votre Soleil ${zodiac[Math.floor(sun.lon/30)]} cherche à ${natalPlanetMeaning.Soleil.strength}. ${asc?`L’Ascendant ${asc} donne à cette volonté une expression ${signDeepMeaning[asc].style}.`:"Sans angle fiable, cette expression extérieure reste à confirmer."} L’enjeu est de faire coïncider votre désir profond et la manière dont vous prenez votre place.`,evidence(sun)],
+            ["Monde émotionnel","Ce qui vous sécurise vraiment",`Votre Lune ${zodiac[Math.floor(moon.lon/30)]} réagit ${signDeepMeaning[zodiac[Math.floor(moon.lon/30)]].style}. En période de tension, votre premier besoin n’est pas forcément une solution : c’est de reconnaître ce qui vous traverse avant d’agir. Son aspect le plus serré montre la fonction psychique avec laquelle ce besoin doit dialoguer.`,evidence(moon)],
+            ["Amour & relations","Votre façon d’aimer et de vous attacher",`Vénus décrit ce qui crée l’accord, le désir de proximité et votre système de valeurs. En ${zodiac[Math.floor(venus.lon/30)]}, vous aimez ${signDeepMeaning[zodiac[Math.floor(venus.lon/30)]].style}. Votre vigilance consiste à ne pas confondre votre langage affectif avec une règle universelle : la relation devient plus riche quand le besoin est nommé concrètement.`,evidence(venus)],
+            ["Travail & vocation","Ce que vous cherchez à construire",`${mc?`Le Milieu du Ciel ${mc} oriente votre visibilité ${signDeepMeaning[mc].style}. `:"La direction du MC reste à confirmer. "}Saturne montre où la compétence se bâtit par durée et exigence ; Jupiter, où l’expérience peut s’élargir. Votre meilleur axe professionnel relie donc responsabilité réelle et espace de progression, sans promettre un métier unique.`,`${evidence(saturn)} · ${evidence(jupiter)}`],
+            ["Énergie & équilibre","Comment préserver votre élan",`Mars en ${zodiac[Math.floor(mars.lon/30)]} décrit votre manière d’agir, de défendre une limite et de relancer l’énergie. Vous gagnez à agir ${signDeepMeaning[zodiac[Math.floor(mars.lon/30)]].style}, puis à observer si l’effort sert encore votre intention solaire. Cette lecture est symbolique et ne remplace aucun avis médical.`,evidence(mars)]
+          ];
+        document.getElementById("profileDomainGrid").innerHTML=cards.map(([label,title,text,technical])=>`<article class="profile-domain"><span>${label}</span><h4>${title}</h4><p>${text}</p><small>Base calculée · ${technical}</small></article>`).join("");
+        const strongest=[...aspects].sort((a,b)=>a.orb-b.orb)[0];document.getElementById("profileDomainConclusion").innerHTML=`<b>Votre fil conducteur.</b> Vous avancez en cherchant un accord entre le Soleil (${zodiac[Math.floor(sun.lon/30)]}), la Lune (${zodiac[Math.floor(moon.lon/30)]}) et ${asc?`l’Ascendant (${asc})`:"votre expression extérieure"}. ${strongest?`Le motif le plus serré — ${strongest.p1.name} ${strongest.a.toLowerCase()} ${strongest.p2.name}, orbe ${strongest.orb.toFixed(2)}° — revient comme une dynamique centrale à apprivoiser, pas comme une fatalité.`:"Aucun aspect majeur très serré ne domine : les placements gardent davantage leur autonomie."}`;
       }
       function immediateSnapshot(natal,date){
         date=atLocalHour(date,12);
@@ -2976,7 +3046,7 @@ return new kd(this.curr.time,a,b)};$jscomp.global.Object.defineProperties(H.prot
           headline.textContent=focus.headline;
           summary.textContent=`${focus.message} Conseil ${prefix==="today"?"du jour":"pour demain"} : ${focus.action}.${prefix==="today"?background:""}`;
         }
-        domains.innerHTML=snapshot.domains.map(({config,reading})=>`<div class="immediate-domain"><b>${config.name}</b><span>${reading.title}<br><small>${reading.evidence}</small></span></div>`).join("");
+        domains.innerHTML=snapshot.domains.map(({config,reading},index)=>`<details class="immediate-domain"${index===0?" open":""}><summary><b>${config.name}</b><strong>${reading.title}</strong><i>+</i></summary><p>${reading.text}</p><div class="domain-action"><b>Conseil concret</b>${reading.action}</div><small>${reading.evidence}</small></details>`).join("");
       }
       function renderTodayReading(natal) {
         const today=atLocalHour(new Date(),12),tomorrow=new Date(today);tomorrow.setDate(tomorrow.getDate()+1);
@@ -3020,6 +3090,8 @@ return new kd(this.curr.time,a,b)};$jscomp.global.Object.defineProperties(H.prot
           document.getElementById("mcValue").textContent = degreeLabel(angles.mc);
           document.getElementById("mcText").innerHTML = `Votre Milieu du Ciel en ${mcSign} décrit la direction professionnelle, la réputation et le type d’accomplissement que vous rendez visible. Cette vocation se construit ${mcProfile.style}. <b>Potentiel :</b> ${mcProfile.gift}. <b>Défi :</b> ne pas laisser ${mcProfile.challenge} décider à votre place. Les transits au MC indiquent les périodes de réorientation ou de responsabilité accrue.`;
           document.getElementById("locationStatus").textContent = `${Number(p.latitude).toFixed(2)}°, ${Number(p.longitude).toFixed(2)}° · signes entiers`;
+          document.getElementById("ascendantDetails").innerHTML=`<section><b>Réflexe d’entrée</b><p>${ascProfile.style}. C’est la manière dont vous abordez une situation nouvelle avant que les autres dimensions du thème prennent le relais.</p></section><section><b>Force et maturation</b><p>Votre ressource visible est ${ascProfile.gift}. La maturation demande de reconnaître ${ascProfile.challenge} sans vous y réduire.</p></section><section><b>Calcul</b><p>${degreeLabel(angles.asc)} · heure, fuseau et coordonnées du lieu de naissance · maisons en signes entiers.</p></section>`;
+          document.getElementById("mcDetails").innerHTML=`<section><b>Direction publique</b><p>Le MC ${mcSign} ne désigne pas un métier imposé : il décrit la qualité que votre parcours cherche à rendre visible, ici ${mcProfile.gift}.</p></section><section><b>Décisions professionnelles</b><p>Une voie cohérente permet d’avancer ${mcProfile.style} tout en empêchant ${mcProfile.challenge} de gouverner vos choix.</p></section><section><b>Calcul</b><p>${degreeLabel(angles.mc)} · angle astronomique dépendant de l’heure et du lieu.</p></section>`;
         }
         const planets = planetDefs.map(([name, body, glyph]) => {
             const lon=longitude(body,date);
@@ -3072,6 +3144,9 @@ return new kd(this.curr.time,a,b)};$jscomp.global.Object.defineProperties(H.prot
         renderNatalAspectReadings(found);
         buildNatalPortrait(planets, found, angles);
         renderDeepNatal(planets,found,angles);
+        buildProfileSynthesis(planets,found,angles);
+        const sun=planets.find((planet)=>planet.name==="Soleil"),sunSignName=zodiac[Math.floor(sun.lon/30)],sunAspect=found.filter((aspect)=>aspect.p1.name==="Soleil"||aspect.p2.name==="Soleil").sort((a,b)=>a.orb-b.orb)[0];
+        document.getElementById("sunDetails").innerHTML=`<section><b>Volonté et identité</b><p>En ${sunSignName}, votre Soleil cherche à rayonner ${signDeepMeaning[sunSignName].style}. Son potentiel est ${signDeepMeaning[sunSignName].gift}.</p></section><section><b>Secteur d’expression</b><p>${sun.house?`La Maison ${sun.house} concentre cette volonté dans ${plainHouseContext[sun.house].scene}.`:"Le secteur de maison reste à confirmer sans angles fiables."}</p></section><section><b>Aspect structurant</b><p>${sunAspect?`${sunAspect.a} à ${(sunAspect.p1.name==="Soleil"?sunAspect.p2:sunAspect.p1).name}, orbe ${sunAspect.orb.toFixed(2)}° : cette autre fonction nuance directement votre affirmation personnelle.`:"Aucun aspect solaire majeur dans les orbes retenus : le signe et la maison prennent plus de poids."}</p></section>`;
         renderTodayReading(planets);
         document.getElementById("analysisDate").value = localIso(new Date());
         periodsLoaded = true;
@@ -3091,13 +3166,14 @@ return new kd(this.curr.time,a,b)};$jscomp.global.Object.defineProperties(H.prot
           chartCard = dashboard.querySelector(".chart-card"),
           natalSummary = dashboard.querySelector(".natal-summary"),
           natalDeep = dashboard.querySelector(".natal-deep"),
+          profileSynthesis = dashboard.querySelector(".profile-synthesis"),
           todayReading = dashboard.querySelector(".today-reading"),
           lifeMap = dashboard.querySelector(".life-map"),
           dateChartCard = dashboard.querySelector(".date-chart-card"),
           agentCard = dashboard.querySelector(".astro-agent"),
           methodology = dashboard.querySelector(".methodology"),
           timeCard = dashboard.querySelector(".time-card");
-        [todayReading,chartCard,natalSummary,natalDeep,timeCard,lifeMap,periods,profileGrid,daily,dateChartCard,agentCard,methodology].forEach((node)=>dashboard.appendChild(node));
+        [todayReading,chartCard,natalSummary,natalDeep,profileSynthesis,timeCard,lifeMap,periods,profileGrid,daily,dateChartCard,agentCard,methodology].forEach((node)=>dashboard.appendChild(node));
         if (p.latitude == null || !p.timezone) {
           try {
             const location = await geocodeBirthplace(p.birthplace);
@@ -3125,9 +3201,12 @@ return new kd(this.curr.time,a,b)};$jscomp.global.Object.defineProperties(H.prot
           `${chineseInfo.animal} · ${chineseInfo.element}`;
         const animalProfile=chineseAnimalProfiles[chineseInfo.animal],elementName=chineseInfo.element.split(" ")[0],elementMeaning=chineseElementProfiles[elementName],polarity=chineseInfo.element.includes("Yin")?"une expression plus intérieure, réceptive et progressive":"une expression plus directe, visible et mobilisatrice";
         document.getElementById("chineseText").innerHTML = `Votre année chinoise ${chineseInfo.year} est calculée selon le calendrier luni-solaire, donc correctement ajustée pour les naissances de janvier et février. Le ${chineseInfo.animal} met en avant ${animalProfile.gift} ; sa vigilance concerne ${animalProfile.challenge}. L’élément ${elementName} ajoute ${elementMeaning}, avec ${polarity}. Cette lecture annuelle reste distincte de votre thème occidental.`;
+        document.getElementById("chineseDetails").innerHTML=`<section><b>Dans les relations</b><p>Le ${chineseInfo.animal} recherche des liens où ${animalProfile.gift} peut s’exprimer. La vigilance consiste à reconnaître ${animalProfile.challenge} avant que ce réflexe ne ferme le dialogue.</p></section><section><b>Dans l’action</b><p>L’élément ${elementName} favorise ${elementMeaning}. Sa polarité indique ${polarity}.</p></section><section><b>Base du calcul</b><p>Année luni-solaire chinoise ${chineseInfo.year}, ajustée au Nouvel An chinois ; cette couche annuelle ne remplace pas le thème natal occidental.</p></section>`;
         document.getElementById("lifePath").textContent = `Chemin de vie ${lp}`;
         const pathProfile=pathProfiles[lp]||pathProfiles[reduce(lp)];
         document.getElementById("lifeText").innerHTML = `${paths[lp]} Votre potentiel consiste à ${pathProfile.gift}. Votre défi principal : ${pathProfile.challenge}. <b>Clé d’évolution :</b> ${pathProfile.key}.`;
+        const num= numerologyDomains[lp]||numerologyDomains[reduce(lp)];
+        document.getElementById("numerologyDetails").innerHTML=`<section><b>Dans les relations</b><p>${num[0]}</p></section><section><b>Dans le travail</b><p>${num[1]}</p></section><section><b>Quand ce nombre déborde</b><p>${num[2]}</p></section><section><b>Pour l’incarner concrètement</b><p>${num[3]}</p></section><section><b>Base du calcul</b><p>Somme réduite de tous les chiffres de votre date de naissance, avec conservation des nombres maîtres 11, 22 et 33. Il s’agit d’une grille symbolique, distincte de l’astronomie.</p></section>`;
         renderKabbalah(p);
         buildChart(p);
       }
