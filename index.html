@@ -1317,7 +1317,39 @@
         .agent-orb { animation:none; }
       }
     </style>
-  </head>
+  <style>
+/* Astra — interface 2026 */
+:root{--bg:#080c17;--panel:#111827;--ink:#f2f5ff;--muted:#a8b3cd;--gold:#bba7ff;--violet:#8b86ff;--line:rgba(163,181,230,.16)}
+body{background:radial-gradient(ellipse at 80% 0,rgba(90,70,182,.22),transparent 48%),radial-gradient(ellipse at 0 60%,rgba(26,98,132,.12),transparent 50%),var(--bg);font-size:16px;line-height:1.65}
+body:before{opacity:.10;background-size:83px 83px}
+.celestial-angel,.stardust{display:none}
+.cosmic-fx:after{background:#507ee7}.cosmic-fx:before{background:#8970ff}
+.shell{width:min(1160px,calc(100% - 48px))}
+.top{height:80px;background:rgba(8,12,23,.84);border-color:var(--line)}
+.brand{font-family:Inter,sans-serif;font-size:24px;letter-spacing:.14em}.brand small{display:none}
+.tag{font-size:13px}.fx-toggle{font-size:13px;min-height:44px}
+main{padding-top:32px}.intro{align-items:center;margin-bottom:26px}.intro h2{font:500 clamp(26px,4vw,38px)/1.2 Inter,sans-serif;letter-spacing:-.04em}
+.eyebrow,.value{color:#b5a9e4;letter-spacing:.10em;font-size:12px}.date,.reset{font-size:13px}
+.journey-nav{position:sticky;top:80px;z-index:15;display:grid;gap:6px;padding:6px;margin-bottom:28px;border-radius:20px;background:rgba(17,24,39,.93);backdrop-filter:blur(20px)}
+.journey-nav button{border-radius:14px;background:transparent;color:#a8b3cd;font-size:14px;font-weight:500;padding:15px 12px;min-height:48px}
+.journey-nav button[aria-pressed=true]{background:linear-gradient(120deg,#c5b9fa,#a8baff);color:#111827;box-shadow:0 4px 22px #9c88f522}
+.card{background:linear-gradient(135deg,rgba(25,34,55,.85),rgba(14,20,35,.96));border:1px solid var(--line);box-shadow:0 12px 44px #00000018;border-radius:26px;padding:32px;margin-bottom:24px}
+.card h3,.card h4{color:var(--ink);letter-spacing:-.025em}.card h3{font-family:Inter,sans-serif;font-weight:500;font-size:clamp(22px,3vw,30px)}
+.card p,.card li{font-size:16px;line-height:1.8;color:#b7c1d7}.card small,.source-ref,.field-hint,.consent{font-size:13px;line-height:1.6}
+button,input,select,summary{font-family:Inter,sans-serif}button{transition:transform .2s,background .2s,box-shadow .2s}button:active{transform:scale(.97)}button:focus-visible,a:focus-visible,summary:focus-visible,select:focus-visible{outline:2px solid #c3b5ff;outline-offset:4px}
+input,select{background:#0c1323;border-radius:14px;font-size:16px;min-height:50px}label{font-size:14px}
+.chart-card{position:relative;overflow:hidden}.chart-head{margin-bottom:16px}.chart-head .value{font-size:12px}.chart-head .status{font-size:12px}.chart-toolbar{justify-content:center;flex-wrap:wrap}.chart-toolbar button,.date-chip,.planet-tab,.domain-tab{font-size:14px;min-height:44px}
+#natalChart{width:min(100%,640px);height:auto;display:block;margin:8px auto 24px;filter:drop-shadow(0 0 35px #7770d01c)}
+.chart-wrap{max-width:780px;margin:auto}.aspect-legend span{font-size:12px}.astro-audit{margin-top:24px}.astro-audit summary{font-size:14px}
+.astra-disclosure{margin-top:22px;border-top:1px solid var(--line);padding-top:18px}.astra-disclosure>summary{cursor:pointer;color:#d6cdf6;font-size:15px;min-height:44px;list-style-position:inside}.astra-disclosure[open]>summary{margin-bottom:24px}
+.astra-space-hidden{display:none!important}.astra-enter{animation:astra-in .35s ease-out}.natal-pillar{background:#ffffff04;border-color:var(--line);padding:24px;border-radius:20px}.natal-pillar p{font-size:15px}.planet-detail{background:#ffffff03}.daily-reminder{margin-top:24px}
+#onboarding{align-items:center;gap:48px;padding:35px 0 70px}.hero h1{font-family:Inter,sans-serif;font-weight:500;font-size:clamp(44px,6vw,72px);line-height:1.08;letter-spacing:-.06em}.hero p{font-size:18px;color:var(--muted);max-width:440px}.hero{padding:0}#revealButton{background:linear-gradient(120deg,#c5b9fa,#a8baff);font-size:16px;min-height:52px;width:100%}.actions{display:block}
+@keyframes astra-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media(hover:hover){.journey-nav button:hover{background:#ffffff12}.journey-nav button[aria-pressed=true]:hover{background:#c4baff}button:hover{box-shadow:0 4px 18px #9483d51a}}
+@media(max-width:700px){.shell{width:calc(100% - 28px)}main{padding-top:20px}.top{height:68px}.journey-nav{top:68px;border-radius:16px;gap:2px}.journey-nav button{font-size:12px;padding:12px 4px}.card{padding:20px;border-radius:22px}.intro{align-items:flex-start;gap:12px}.intro h2{font-size:26px}.intro .date{font-size:12px}.reset{padding:8px 0;min-height:44px}.chart-head{display:block}.chart-head .status{display:inline-flex;margin-top:8px}.chart-toolbar{gap:6px}.chart-toolbar button{font-size:12px;padding:10px}.card p{font-size:16px}.tag{display:none}#onboarding{gap:24px;padding-top:10px}.hero h1{font-size:46px}.hero p{font-size:16px}.hero .eyebrow{font-size:11px}.natal-pillars{grid-template-columns:1fr}.daily-reminder{flex-wrap:wrap}.agent-form{flex-wrap:wrap}.agent-form input{min-width:0}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.cosmic-fx{display:none}}
+.fx-off .astra-enter{animation:none}
+</style></head>
   <body>
     <div class="cosmic-fx" aria-hidden="true">
       <i class="shooting-star s1"></i>
@@ -1344,10 +1376,9 @@
         <section id="onboarding">
           <div class="hero">
             <div class="eyebrow">Votre ciel · Votre nature · Vos cycles</div>
-            <h1>Tout commence<br>à votre naissance.</h1>
+            <h1>Votre ciel.<br>Votre empreinte.</h1>
             <p>
-              Une carte occidentale calculée à l’instant de naissance, enrichie
-              de repères chinois et numérologiques présentés séparément.
+              Découvrez votre thème astral à partir de votre date, de votre heure et de votre lieu de naissance.
             </p>
           </div>
           <div class="card">
@@ -1379,11 +1410,7 @@
                 <label for="birthplace">Ville et pays de naissance</label
                 ><input id="birthplace" type="text" autocomplete="off" required placeholder="Nancy, France">
               </div>
-              <div class="wide">
-                <label for="hebrewname">Prénom en hébreu <span aria-hidden="true">·</span> totalement facultatif</label>
-                <input id="hebrewname" type="text" dir="auto" autocomplete="off" placeholder="Ex. מרים">
-                <small class="field-hint">Laissez vide si vous ne connaissez pas son orthographe hébraïque. Cela ne change ni votre thème astral ni vos horoscopes ; seule la gématrie du prénom sera omise.</small>
-              </div>
+              <input id="hebrewname" type="hidden" value="">
               <div class="consent">
                 Ces informations sont conservées uniquement dans ce navigateur
                 pour ce prototype. L’heure et le lieu exacts seront
@@ -1411,7 +1438,7 @@
               </button>
             </div>
           </div>
-          <nav class="journey-nav" aria-label="Parcours de lecture"><span><b>01</b> Aujourd’hui &amp; demain</span><span><b>02</b> Votre thème natal</span><span><b>03</b> Explorer une autre date</span></nav>
+          <nav class="journey-nav" aria-label="Votre espace"><button type="button" data-space="theme" aria-pressed="true">✧ Mon thème</button><button type="button" data-space="horoscope" aria-pressed="false">☼ Mon horoscope</button><button type="button" data-space="cycles" aria-pressed="false">↗ Mes cycles</button></nav>
           <article class="card time-card">
             <div class="value">Votre horoscope personnel</div>
             <h3>Choisir la date à analyser</h3>
@@ -1463,12 +1490,12 @@
             <div class="chart-head">
               <div>
                 <div class="value">D’après votre date, votre heure et votre lieu de naissance</div>
-                <h3>Voici votre thème astral de naissance</h3>
+                <h3>Votre thème astral</h3>
                 <p id="chartMoment"></p>
               </div>
               <span class="status" id="engineStatus">Calcul astronomique</span>
             </div>
-            <details class="astro-audit" open>
+            <details class="astro-audit">
               <summary><span>Traçabilité du calcul astronomique</span><b>Moteur réel actif</b></summary>
               <div class="audit-grid">
                 <div class="audit-item"><span>Instant universel calculé</span><strong id="astroUtcValue">Conversion vers UTC…</strong></div>
@@ -3160,6 +3187,24 @@ return new kd(this.curr.time,a,b)};$jscomp.global.Object.defineProperties(H.prot
         periodsLoaded = true;
         buildStrongPeriods(planets, p.birthdate);
       }
+
+function selectAstraSpace(space){
+ document.querySelectorAll('[data-space]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.space===space)));
+ document.querySelectorAll('[data-astra-space]').forEach(el=>{const hide=el.dataset.astraSpace!==space;el.classList.toggle('astra-space-hidden',hide);el.classList.toggle('astra-enter',!hide)});
+}
+function organizeAstra(){
+ const d=document.getElementById('dashboard');
+ const groups={theme:['.chart-card','.natal-summary','.natal-deep','.profile-synthesis',':scope > .grid','.methodology'],horoscope:['.today-reading','.time-card','.daily','.date-chart-card'],cycles:['.life-map','.periods']};
+ for(const [space,selectors] of Object.entries(groups))for(const sel of selectors){const el=d.querySelector(sel);if(el)el.dataset.astraSpace=space}
+ const chart=d.querySelector('.chart-card'),audit=chart.querySelector('.astro-audit');
+ if(audit)chart.append(audit);
+ const readings=chart.querySelector('.natal-aspect-analysis');
+ if(readings&&!readings.parentElement.classList.contains('astra-disclosure')){const detail=document.createElement('details');detail.className='astra-disclosure';const summary=document.createElement('summary');summary.textContent='Comprendre les lignes de ma carte';detail.append(summary);readings.before(detail);detail.append(readings)}
+ for(const [sel,label] of [['.natal-deep','Explorer mes planètes'],['.profile-synthesis','Lire mon profil par domaine']]){const el=d.querySelector(sel);if(el&&!el.querySelector(':scope > .astra-disclosure')){const detail=document.createElement('details');detail.className='astra-disclosure';const summary=document.createElement('summary');summary.textContent=label;detail.append(summary);while(el.firstChild)detail.append(el.firstChild);el.append(detail)}}
+ selectAstraSpace('theme');
+}
+document.querySelectorAll('[data-space]').forEach(button=>button.addEventListener('click',()=>{selectAstraSpace(button.dataset.space);window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'})}));
+
       async function render(p) {
         activeProfile = p;
         document.getElementById("onboarding").style.display = "none";
@@ -3181,7 +3226,8 @@ return new kd(this.curr.time,a,b)};$jscomp.global.Object.defineProperties(H.prot
           agentCard = dashboard.querySelector(".astro-agent"),
           methodology = dashboard.querySelector(".methodology"),
           timeCard = dashboard.querySelector(".time-card");
-        [todayReading,chartCard,natalSummary,natalDeep,profileSynthesis,timeCard,lifeMap,periods,profileGrid,daily,dateChartCard,agentCard,methodology].forEach((node)=>dashboard.appendChild(node));
+        [chartCard,natalSummary,natalDeep,profileSynthesis,profileGrid,todayReading,timeCard,daily,dateChartCard,lifeMap,periods,agentCard,methodology].forEach((node)=>dashboard.appendChild(node));
+        organizeAstra();
         if (p.latitude == null || !p.timezone) {
           try {
             const location = await geocodeBirthplace(p.birthplace);
@@ -3268,6 +3314,7 @@ return new kd(this.curr.time,a,b)};$jscomp.global.Object.defineProperties(H.prot
         document.querySelectorAll("[data-chart-filter]").forEach((candidate)=>{const active=candidate===button;candidate.classList.toggle("active",active);candidate.setAttribute("aria-pressed",String(active))});
       }));
       function revealForecast(date, scroll = true) {
+        selectAstraSpace("horoscope");
         document.getElementById("dashboard").classList.add("forecast-open");
         buildDaily(activeNatal, date);
         if (scroll) requestAnimationFrame(() => document.querySelector(".daily").scrollIntoView({ behavior:"smooth", block:"start" }));
